@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import modalAction from "../../store/actions/modalAction";
 import { deleteTool } from "../../store/actions/toolAction";
+import Confirmation from "../common/confirmation";
 import Modal from "../common/modal";
 import AddTools from "./AddTools";
 
 const Index = () => {
+  const [clicked, setClicked] = useState("");
   const tool = useSelector((store) => store.tool);
   const dispatch = useDispatch();
 
@@ -14,7 +17,10 @@ const Index = () => {
         <p className="text-3xl font-medium">Tools management</p>
         <button
           className="btn shadow-sm"
-          onClick={() => dispatch(modalAction(true))}
+          onClick={() => {
+            setClicked("addTool");
+            dispatch(modalAction(true));
+          }}
         >
           Add +
         </button>
@@ -35,12 +41,11 @@ const Index = () => {
             {tool.tools.map((el, index) => (
               <tr
                 className={`text-left rounded-b-xl ${
-                  tool.tools.length !== index + 1 &&
-                  "border-b border-gray-100"
+                  tool.tools.length !== index + 1 && "border-b border-gray-100"
                 }`}
                 key={el._id}
               >
-                <td className="p-3 text-lg">{el.category.name}</td>
+                <td className="p-3 text-lg">{el.category?.name}</td>
                 <td className="p-3 text-lg">{el.name}</td>
                 <td className="p-3">
                   <img src={el.image.url} className="w-20 rounded-xl" />
@@ -52,13 +57,17 @@ const Index = () => {
                 <td className="p-3 flex-inline">
                   <i
                     className="fa-solid fa-pen-to-square cursor-pointer text-lg"
-                    onClick={() => dispatch(modalAction(true, el))}
+                    onClick={() => {
+                      setClicked("addTool");
+                      dispatch(modalAction(true, el));
+                    }}
                   ></i>
                   <i
                     className="fa-solid fa-trash cursor-pointer text-lg ml-5"
-                    onClick={() =>
-                      dispatch(deleteTool(el._id, el.image.public_id))
-                    }
+                    onClick={() => {
+                      setClicked("confirmation");
+                      dispatch(modalAction(true, el));
+                    }}
                   ></i>
                 </td>
               </tr>
@@ -66,9 +75,15 @@ const Index = () => {
           </tbody>
         </table>
       </div>
-      <Modal>
-        <AddTools />
-      </Modal>
+      {clicked === "confirmation" ? (
+        <Modal>
+          <Confirmation deleteHandler={deleteTool} />
+        </Modal>
+      ) : (
+        <Modal>
+          <AddTools />
+        </Modal>
+      )}
     </div>
   );
 };

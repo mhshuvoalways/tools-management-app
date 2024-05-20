@@ -57,6 +57,7 @@ export const updateTool = (category, id, toolImageId) => (dispatch) => {
 };
 
 export const deleteTool = (id, toolImageId) => (dispatch) => {
+  dispatch(btnAction(true));
   axios
     .delete(`/tool/deleteTool/${id}/${encodeURIComponent(toolImageId)}`)
     .then((response) => {
@@ -64,9 +65,12 @@ export const deleteTool = (id, toolImageId) => (dispatch) => {
         type: Types.DELETE_TOOL,
         payload: response.data.response,
       });
+      dispatch(btnAction(false));
+      dispatch(modalAction(false));
       dispatch(alertAction(response.data, "success"));
     })
     .catch((err) => {
       dispatch(alertAction(err.response.data, "error"));
+      dispatch(btnAction(false));
     });
 };

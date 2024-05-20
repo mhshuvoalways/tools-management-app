@@ -10,7 +10,7 @@ const Modal = ({ children }) => {
     modal.modal && (
       <div>
         <div className="fixed mainWidht inset-0 z-40 flex justify-center items-center">
-          <div className="bg-white shadow-lg rounded-lg w-full lg:w-5/12 max-h-[90vh] overflow-y-auto relative modal">
+          <div className="bg-white shadow-lg rounded-lg w-full lg:w-4/12 max-h-[90vh] overflow-y-auto relative modal">
             <p
               onClick={() => dispatch(modalAction(false))}
               className="cursor-pointer text-end p-5 font-bold text-lg absolute right-0"

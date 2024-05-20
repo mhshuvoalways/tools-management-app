@@ -5,6 +5,12 @@ const Dashboard = () => {
   const { tools } = useSelector((store) => store.tool);
   const { orders } = useSelector((store) => store.order);
 
+  let pendingOrders = 0;
+  orders.forEach((el) => {
+    if (el.status === "Pending") {
+      pendingOrders++;
+    }
+  });
   return (
     <div className="mainWidht mt-10">
       <p className="text-3xl font-medium">Hello Admin</p>
@@ -23,13 +29,16 @@ const Dashboard = () => {
           </p>
         </div>
         <div className="bg-white p-5 rounded-xl text-center shadow-sm">
-          <p className="text-xl">Order Tools</p>
+          <p className="text-xl">Total Orders</p>
           <p className="text-primary text-6xl font-semibold mt-2">
             {orders.length}
           </p>
         </div>
         <div className="bg-white p-5 rounded-xl text-center shadow-sm">
-          <p className="text-xl">Total Users</p>
+          <p className="text-xl">New Orders</p>
+          <p className="text-primary text-6xl font-semibold mt-2">
+            {pendingOrders}
+          </p>
         </div>
       </div>
     </div>

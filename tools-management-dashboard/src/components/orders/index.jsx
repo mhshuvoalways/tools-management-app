@@ -1,10 +1,14 @@
+import moment from "moment";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import modalAction from "../../store/actions/modalAction";
 import { deleteOrder } from "../../store/actions/orderAction";
+import DeleteConfirmation from "../common/confirmation";
 import Modal from "../common/modal";
 import Confirmation from "./Confirmation";
 
 const Index = () => {
+  const [clicked, setClicked] = useState("");
   const { orders } = useSelector((store) => store.order);
   const dispatch = useDispatch();
 
@@ -19,6 +23,7 @@ const Index = () => {
               <th className="p-3">Delivery Address</th>
               <th className="p-3">Additional Information</th>
               <th className="p-3">Tools</th>
+              <th className="p-3">Order Date</th>
               <th className="p-3">Status</th>
               <th className="p-3 rounded-r-xl">Actions</th>
             </tr>
@@ -78,15 +83,24 @@ const Index = () => {
                     </div>
                   ))}
                 </td>
+                <td className={`p-3 text-lg`}>
+                  <p>{moment(el.createdAt).format("LL")}</p>
+                </td>
                 <td className={`p-3 text-lg text-primary`}>{el.status}</td>
                 <td className="p-3 flex-inline">
                   <i
                     className="fa-solid fa-pen-to-square cursor-pointer text-lg"
-                    onClick={() => dispatch(modalAction(true, el))}
+                    onClick={() => {
+                      setClicked("");
+                      dispatch(modalAction(true, el));
+                    }}
                   ></i>
                   <i
                     className="fa-solid fa-trash cursor-pointer text-lg ml-5"
-                    onClick={() => dispatch(deleteOrder(el._id))}
+                    onClick={() => {
+                      setClicked("confirmation");
+                      dispatch(modalAction(true, el));
+                    }}
                   ></i>
                 </td>
               </tr>
@@ -94,9 +108,15 @@ const Index = () => {
           </tbody>
         </table>
       </div>
-      <Modal>
-        <Confirmation />
-      </Modal>
+      {clicked === "confirmation" ? (
+        <Modal>
+          <DeleteConfirmation deleteHandler={deleteOrder} />
+        </Modal>
+      ) : (
+        <Modal>
+          <Confirmation />
+        </Modal>
+      )}
     </div>
   );
 };

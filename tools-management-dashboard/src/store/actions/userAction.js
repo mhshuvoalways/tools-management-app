@@ -27,20 +27,6 @@ export const adminLogin = (user, navigate) => (dispatch) => {
     });
 };
 
-export const getUsers = () => (dispatch) => {
-  axios
-    .get("/user/getUsers")
-    .then((response) => {
-      dispatch({
-        type: Types.GET_USER,
-        payload: response.data,
-      });
-    })
-    .catch((err) => {
-      dispatch(alertAction(err.response.data, "error"));
-    });
-};
-
 export const isAuthenticate = (navigate) => (dispatch) => {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -53,7 +39,10 @@ export const isAuthenticate = (navigate) => (dispatch) => {
     } else {
       dispatch({
         type: Types.ISAUTHENTICATE,
-        payload: jwtDecode(token),
+        payload: {
+          isAuth: true,
+          user: jwtDecode(token),
+        },
       });
       const timeout = (decoded.exp - currentTime) * 1000;
       setTimeout(() => {
@@ -69,5 +58,5 @@ export const logout = (navigate) => (dispatch) => {
   });
   localStorage.removeItem("token");
   setAuthToken("");
-  navigate("/login");
+  navigate && navigate("/login");
 };

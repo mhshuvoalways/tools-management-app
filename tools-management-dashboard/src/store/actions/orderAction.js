@@ -38,6 +38,7 @@ export const updateOrders = (order, id) => (dispatch) => {
 };
 
 export const deleteOrder = (id) => (dispatch) => {
+  dispatch(btnAction(true));
   axios
     .delete(`/order/deleteOrder/${id}`)
     .then((response) => {
@@ -45,9 +46,12 @@ export const deleteOrder = (id) => (dispatch) => {
         type: Types.DELETE_ORDERS,
         payload: response.data.response,
       });
+      dispatch(btnAction(false));
+      dispatch(modalAction(false));
       dispatch(alertAction(response.data, "success"));
     })
     .catch((err) => {
       dispatch(alertAction(err.response.data, "error"));
+      dispatch(btnAction(false));
     });
 };

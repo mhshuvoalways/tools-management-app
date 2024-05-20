@@ -2,9 +2,8 @@ import clearData from "../constants/clearData";
 import * as Types from "../constants/userType";
 
 const init = {
-  isAuth: true,
+  isAuth: false,
   user: {},
-  users: [],
 };
 
 const userReudcer = (state = init, action) => {
@@ -17,25 +16,18 @@ const userReudcer = (state = init, action) => {
       };
     }
 
-    case Types.GET_USER: {
-      return {
-        ...state,
-        users: action.payload,
-      };
-    }
-
     case Types.ISAUTHENTICATE: {
       return {
         ...state,
-        user: action.payload,
+        isAuth: action.payload.isAuth,
+        user: action.payload.user,
       };
     }
 
     case clearData: {
       return {
-        isAuth: true,
+        isAuth: false,
         user: {},
-        users: [],
       };
     }
     default:

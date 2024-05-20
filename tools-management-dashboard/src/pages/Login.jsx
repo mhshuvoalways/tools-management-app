@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../store/actions/userAction";
 
@@ -11,6 +11,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isAuth } = useSelector((store) => store.user);
 
   const changeHandler = (event) => {
     setUser({
@@ -23,6 +24,12 @@ const Login = () => {
     event.preventDefault();
     dispatch(adminLogin(user, navigate));
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/");
+    }
+  }, [isAuth, navigate]);
 
   return (
     <div className="flex justify-center items-center h-screen">

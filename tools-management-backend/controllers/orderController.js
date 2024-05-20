@@ -40,7 +40,7 @@ const orderPlace = async (req, res) => {
         .then((response) => {
           res.status(200).json({
             response,
-            message: "We have received your order! Thank you!",
+            message: "We have received your order! We will contact soon. Thank you!",
           });
         })
         .catch(() => {

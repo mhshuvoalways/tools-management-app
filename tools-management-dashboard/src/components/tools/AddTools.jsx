@@ -92,7 +92,7 @@ const AddTool = () => {
   return (
     <form className="space-y-5" onSubmit={onSubmit}>
       <div>
-        <label>Category</label>
+        <label>Category*</label>
         <select
           className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
           onChange={categoryHandler}
@@ -107,7 +107,7 @@ const AddTool = () => {
         </select>
       </div>
       <div>
-        <label>Name</label>
+        <label>Name*</label>
         <input
           type="text"
           className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
@@ -117,7 +117,7 @@ const AddTool = () => {
         />
       </div>
       <div>
-        <label>Description</label>
+        <label>Description*</label>
         <textarea
           className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2 h-20"
           name="description"
@@ -126,7 +126,7 @@ const AddTool = () => {
         />
       </div>
       <div>
-        <label>Price</label>
+        <label>Price*</label>
         <input
           type="number"
           className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
@@ -158,7 +158,7 @@ const AddTool = () => {
           </div>
         ) : (
           <label>
-            Upload an Image
+            Upload an Image*
             <p className="w-full p-3 h-32 bg-gray-100 rounded-xl cursor-pointer border-dotted border-primary border-2 mt-2"></p>
             <input
               type="file"

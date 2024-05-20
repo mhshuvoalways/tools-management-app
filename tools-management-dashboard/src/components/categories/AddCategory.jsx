@@ -72,7 +72,7 @@ const AddCategory = () => {
   return (
     <form className="space-y-5" onSubmit={onSubmit}>
       <div>
-        <label>Category Name</label>
+        <label>Category Name*</label>
         <input
           type="text"
           className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
@@ -107,7 +107,7 @@ const AddCategory = () => {
           </div>
         ) : (
           <label>
-            Upload an Image
+            Upload an Image*
             <p className="w-full p-3 h-32 bg-gray-100 rounded-xl cursor-pointer border-dotted border-primary border-2 mt-2"></p>
             <input
               type="file"

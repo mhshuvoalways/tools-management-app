@@ -5,7 +5,7 @@ const DeliveryAddress = ({changeHandler }) => {
       <div className="space-y-5 mt-5">
         <div className="flex items-center gap-5">
           <div className="w-full">
-            <label>Name</label>
+            <label>Name*</label>
             <input
               type="text"
               className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
@@ -14,7 +14,7 @@ const DeliveryAddress = ({changeHandler }) => {
             />
           </div>
           <div className="w-full">
-            <label>Email</label>
+            <label>Email*</label>
             <input
               type="text"
               className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
@@ -25,7 +25,7 @@ const DeliveryAddress = ({changeHandler }) => {
         </div>
         <div className="flex items-center gap-5">
           <div className="w-full">
-            <label>Phone</label>
+            <label>Phone*</label>
             <input
               type="text"
               className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
@@ -34,7 +34,7 @@ const DeliveryAddress = ({changeHandler }) => {
             />
           </div>
           <div className="w-full">
-            <label>Country</label>
+            <label>Country*</label>
             <input
               type="text"
               className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
@@ -45,7 +45,7 @@ const DeliveryAddress = ({changeHandler }) => {
         </div>
         <div className="flex items-center gap-5">
           <div className="w-full">
-            <label>City</label>
+            <label>City*</label>
             <input
               type="text"
               className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
@@ -54,7 +54,7 @@ const DeliveryAddress = ({changeHandler }) => {
             />
           </div>
           <div className="w-full">
-            <label>Street Address</label>
+            <label>Street Address*</label>
             <input
               type="text"
               className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"

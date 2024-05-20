@@ -1,4 +1,5 @@
 const Category = require("../models/Category");
+const Tools = require("../models/Tools");
 const serverError = require("../utils/serverError");
 const cloudinary = require("cloudinary");
 const categoryValidation = require("../validations/categoryValidation");
@@ -134,6 +135,16 @@ const deleteCategory = (req, res) => {
         serverError(res);
       });
     cloudinary.v2.uploader.destroy(categoryImageId);
+    Tools.find({ category: id })
+      .then((toolResponse) => {
+        Tools.deleteMany({ category: id }).exec();
+        toolResponse.forEach((el) => {
+          cloudinary.v2.uploader.destroy(el.image.public_id);
+        });
+      })
+      .catch(() => {
+        serverError(res);
+      });
   }
 };
 

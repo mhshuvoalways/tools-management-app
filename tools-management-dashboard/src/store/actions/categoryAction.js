@@ -60,6 +60,7 @@ export const updateCategory = (category, id, categoryImageId) => (dispatch) => {
 };
 
 export const deleteCategory = (id, categoryImageId) => (dispatch) => {
+  dispatch(btnAction(true));
   axios
     .delete(
       `/category/deleteCategory/${id}/${encodeURIComponent(categoryImageId)}`
@@ -69,9 +70,12 @@ export const deleteCategory = (id, categoryImageId) => (dispatch) => {
         type: Types.DELETE_CATEGORY,
         payload: response.data.response,
       });
+      dispatch(btnAction(false));
+      dispatch(modalAction(false));
       dispatch(alertAction(response.data, "success"));
     })
     .catch((err) => {
       dispatch(alertAction(err.response.data, "error"));
+      dispatch(btnAction(false));
     });
 };
