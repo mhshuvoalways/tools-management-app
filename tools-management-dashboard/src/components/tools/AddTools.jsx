@@ -164,7 +164,7 @@ const AddTool = () => {
               type="file"
               onChange={changeHandlerImage}
               className="hidden"
-              accept=".png, .jpg, .jpeg"
+              accept=".png, .jpg, .jpeg, .gif .webp"
             />
           </label>
         )}
