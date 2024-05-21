@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCategory } from "../../store/actions/categoryAction";
 import modalAction from "../../store/actions/modalAction";
-import Confirmation from "../common/confirmation";
+import Confirmation from "../common/deleteConfirmation";
 import Modal from "../common/modal";
 import AddCategory from "./AddCategory";
 
@@ -47,7 +47,7 @@ const Index = () => {
               >
                 <td className="p-3 text-lg">{el.name}</td>
                 <td className="p-3">
-                  <img src={el.image.url} className="w-20 rounded-xl" />
+                  <img src={el.image.url} className="w-20 h-14 rounded-xl object-cover" />
                 </td>
                 <td className="p-3 flex-inline">
                   <i

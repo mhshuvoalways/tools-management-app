@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import modalAction from "../../store/actions/modalAction";
 import { deleteOrder } from "../../store/actions/orderAction";
-import DeleteConfirmation from "../common/confirmation";
+import DeleteConfirmation from "../common/deleteConfirmation";
 import Modal from "../common/modal";
 import Confirmation from "./Confirmation";
 
@@ -66,8 +66,8 @@ const Index = () => {
                         "border-b border-gray-100"
                       }`}
                     >
-                      <img src={tool.image.url} className="w-20 rounded-xl" />
-                      <div>
+                      <img src={tool.image.url} className="w-20 h-14 rounded-xl object-cover" />
+                      <div className="mt-1">
                         <p>
                           <strong>Tool:</strong> {tool.name}
                         </p>

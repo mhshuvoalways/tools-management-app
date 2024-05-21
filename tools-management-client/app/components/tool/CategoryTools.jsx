@@ -4,9 +4,13 @@ import Image from "next/image";
 import Search from "../common/search";
 import Items from "./Items";
 
-const Tools = async ({ categoryName }) => {
+const Tools = async ({ categoryName, search }) => {
   const category = await getSingleCategory(categoryName);
   const tools = await getCategoryTools(category?._id);
+
+  const newTools = search
+    ? tools.filter((el) => el.name.toLowerCase().includes(search.toLowerCase()))
+    : tools;
 
   return (
     <div className="mt-10 mainWidht">
@@ -28,8 +32,9 @@ const Tools = async ({ categoryName }) => {
         </div>
       </div>
       <div className="my-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-        {tools.length &&
-          tools?.map((item) => <Items key={item.id} item={item} />)}
+        {newTools.length
+          ? newTools?.map((item) => <Items key={item.id} item={item} />)
+          : null}
       </div>
     </div>
   );

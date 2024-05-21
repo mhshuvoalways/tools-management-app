@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Items = ({ item }) => {
   return (
-    <Link href={`/category/${item.url}`}>
+    <Link href={`/tools/${item.url}`}>
       <div className="bg-white p-4 rounded-xl cursor-pointer shadow-sm">
         <Image
           src={item.image.url}

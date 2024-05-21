@@ -1,12 +1,18 @@
 import getCategories from "@/lib/getCategories";
 import Items from "./Items";
 
-const Categories = async () => {
+const Categories = async ({ search }) => {
   const categories = await getCategories();
+
+  const newCateogories = search
+    ? categories.filter((el) =>
+        el.name.toLowerCase().includes(search.toLowerCase())
+      )
+    : categories;
 
   return (
     <div className="mainWidht mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-      {categories.map((item) => (
+      {newCateogories.map((item) => (
         <Items key={item._id} item={item} />
       ))}
     </div>

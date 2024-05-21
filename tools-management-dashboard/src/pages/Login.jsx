@@ -5,8 +5,8 @@ import { adminLogin } from "../store/actions/userAction";
 
 const Login = () => {
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email: "admin@gmail.com",
+    password: "admin123",
   });
 
   const dispatch = useDispatch();
