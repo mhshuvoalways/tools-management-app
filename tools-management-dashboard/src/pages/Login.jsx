@@ -41,6 +41,7 @@ const Login = () => {
             className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
             name="email"
             onChange={changeHandler}
+            value={user.email}
           />
         </div>
         <div>
@@ -50,6 +51,7 @@ const Login = () => {
             className="w-full p-3 outline-0 bg-gray-100 rounded-xl mt-2"
             name="password"
             onChange={changeHandler}
+            value={user.password}
           />
         </div>
         <button className="btn w-full">Submit</button>
