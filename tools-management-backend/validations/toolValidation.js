@@ -14,8 +14,8 @@ const productValidation = (value) => {
   }
   if (!value.description) {
     error.description = "Please provide tool description";
-  } else if (value.description.length >= 100) {
-    error.description = "Keep the description within 100 charecters";
+  } else if (value.description.length >= 150) {
+    error.description = "Keep the description within 150 charecters";
   }
   if (!value.price) {
     error.price = "Please provide tool price";
