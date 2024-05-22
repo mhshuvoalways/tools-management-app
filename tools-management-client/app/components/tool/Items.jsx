@@ -30,7 +30,7 @@ const Items = ({ item }) => {
         alt=""
         className="object-cover h-56"
       />
-      <p className="font-semibold text-xl mt-5">{item.title}</p>
+      <p className="font-semibold text-xl mt-5 line-clamp-1">{item.name}</p>
       <p className="opacity-70 line-clamp-2">{item.description}</p>
       <div className="flex justify-between items-center gap-1 mt-5">
         <p className="text-primary text-2xl">${item.price} per day</p>

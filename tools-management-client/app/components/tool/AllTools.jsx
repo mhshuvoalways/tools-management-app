@@ -21,7 +21,7 @@ const Tools = async ({ search }) => {
       </div>
       <div className="my-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
         {newTools.length
-          ? newTools?.map((item) => <Items key={item.id} item={item} />)
+          ? newTools?.map((item) => <Items key={item._id} item={item} />)
           : null}
       </div>
     </div>

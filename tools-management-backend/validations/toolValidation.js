@@ -1,4 +1,5 @@
 const productValidation = (value) => {
+  console.log(value);
   const error = {};
   if (!value.categoryId) {
     error.category = "Please provide a tool category";
@@ -8,9 +9,13 @@ const productValidation = (value) => {
   }
   if (!value.name) {
     error.name = "Please provide tool name";
+  } else if (value.name.length >= 50) {
+    error.name = "Keep the name within 50 charecters";
   }
   if (!value.description) {
     error.description = "Please provide tool description";
+  } else if (value.description.length >= 100) {
+    error.description = "Keep the description within 100 charecters";
   }
   if (!value.price) {
     error.price = "Please provide tool price";

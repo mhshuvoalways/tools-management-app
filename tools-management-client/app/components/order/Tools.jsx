@@ -7,13 +7,16 @@ const Tools = ({ orderTools, totalPrice, onSubmit }) => {
           <p>Products</p>
           <p>Price</p>
         </div>
-        <div className="border-y py-5 text-sm space-y-2">
+        <div className="border-y py-5 text-sm space-y-5">
           {orderTools?.map((item, index) => (
-            <div className="flex justify-between" key={item._id}>
-              <p>
-                {index + 1}. {item.name}
-              </p>
-              <p>${item.price}</p>
+            <div key={item._id}>
+              <div className="flex justify-between gap-2">
+                <p className="text-lg">
+                  {index + 1}. {item.name}
+                </p>
+                <p>${item.price}</p>
+              </div>
+              <p className="text-sm opacity-80">{item.description}</p>
             </div>
           ))}
         </div>
