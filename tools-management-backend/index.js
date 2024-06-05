@@ -28,5 +28,3 @@ app.get("*", (req, res) => {
 });
 
 db(app);
-
-const test = 'dfd fdf'
