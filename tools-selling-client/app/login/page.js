@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import { useContext, useState } from "react";
 
 const SignUpPage = () => {
-  const { isAuth, setIsAuth } = useContext(MyContext);
+  const { isAuth, setIsAuth, isAuthHandler } = useContext(MyContext);
 
   const [user, setUser] = useState({
     name: "",
@@ -43,6 +43,7 @@ const SignUpPage = () => {
         localStorage.setItem("token", JSON.stringify(token));
         setAuthToken(token);
         setIsAuth(true);
+        isAuthHandler();
       })
       .catch((err) => {
         setErrors(err.response?.data);

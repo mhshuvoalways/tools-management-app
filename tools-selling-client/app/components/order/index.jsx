@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import DeliveryAddress from "./DeliveryAddress";
 import Tools from "./Tools";
+import { redirect } from "next/navigation";
 
 const Index = () => {
   const [deliverAddress, setDeliveryAddress] = useState({
@@ -27,7 +28,7 @@ const Index = () => {
     streetAddress: "",
   });
 
-  const { orderTools, setBtnAction, setTostify, setOrderTools } =
+  const { isAuth, orderTools, setBtnAction, setTostify, setOrderTools } =
     useContext(MyContext);
   const router = useRouter();
 
@@ -73,6 +74,10 @@ const Index = () => {
         }
       });
   };
+
+  if (!isAuth) {
+    redirect("/login");
+  }
 
   return (
     <div className="mainWidht mt-10 flex justify-between gap-10 flex-wrap md:flex-nowrap">

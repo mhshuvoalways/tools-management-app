@@ -3,17 +3,17 @@
 import { MyContext } from "@/app/context";
 import Axios from "@/app/services/axios";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 const MyOrder = () => {
   const [orders, setOrders] = useState([]);
-  const { setTostify } = useContext(MyContext);
+  const { isAuth, user, setTostify } = useContext(MyContext);
 
   useEffect(() => {
     Axios.get("/order/getMyOrders")
       .then((res) => {
         setOrders(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         if (err.response?.data?.message) {
@@ -25,9 +25,13 @@ const MyOrder = () => {
       });
   }, [setTostify]);
 
+  if (!isAuth) {
+    redirect("/login");
+  }
+
   return (
     <div className="mt-20 mainWidht">
-      <p className="text-3xl mb-2">Hello MH Shuvo</p>
+      <p className="text-3xl mb-2">Hello {user?.name}</p>
       <p>Here is your orders</p>
       <div className="table-auto w-full mt-10 overflow-x-auto">
         <table>

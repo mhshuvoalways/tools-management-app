@@ -63,6 +63,7 @@ const userRegister = (req, res) => {
                   const token = jwt.sign(
                     {
                       _id: createUser._id,
+                      name,
                       email: createUser.email,
                     },
                     process.env.SECRET,
@@ -105,6 +106,7 @@ const userLogin = (req, res) => {
               const token = jwt.sign(
                 {
                   _id: response._id,
+                  name: response.name,
                   email: response.email,
                 },
                 process.env.SECRET,
