@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Tostify = () => {
   const { tostify } = useContext(MyContext);
+  
   useEffect(() => {
     if (tostify.type && tostify.messages) {
       Object.values(tostify.messages).forEach((msg) => {

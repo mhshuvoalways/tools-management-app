@@ -1,4 +1,4 @@
-const DeliveryAddress = ({changeHandler }) => {
+const DeliveryAddress = ({ changeHandler, deliverAddressError }) => {
   return (
     <div className="w-full md:w-6/12">
       <p className="text-xl font-semibold">Delivery Details</p>
@@ -12,6 +12,9 @@ const DeliveryAddress = ({changeHandler }) => {
               name="name"
               onChange={changeHandler}
             />
+            <p className="text-red-600 font-medium mt-1">
+              {deliverAddressError?.name}
+            </p>
           </div>
           <div className="w-full">
             <label>Email*</label>
@@ -21,6 +24,9 @@ const DeliveryAddress = ({changeHandler }) => {
               name="email"
               onChange={changeHandler}
             />
+            <p className="text-red-600 font-medium mt-1">
+              {deliverAddressError?.email}
+            </p>
           </div>
         </div>
         <div className="flex items-center gap-5">
@@ -32,6 +38,9 @@ const DeliveryAddress = ({changeHandler }) => {
               name="phone"
               onChange={changeHandler}
             />
+            <p className="text-red-600 font-medium mt-1">
+              {deliverAddressError?.phone}
+            </p>
           </div>
           <div className="w-full">
             <label>Country*</label>
@@ -41,6 +50,9 @@ const DeliveryAddress = ({changeHandler }) => {
               name="country"
               onChange={changeHandler}
             />
+            <p className="text-red-600 font-medium mt-1">
+              {deliverAddressError?.country}
+            </p>
           </div>
         </div>
         <div className="flex items-center gap-5">
@@ -52,6 +64,9 @@ const DeliveryAddress = ({changeHandler }) => {
               name="city"
               onChange={changeHandler}
             />
+            <p className="text-red-600 font-medium mt-1">
+              {deliverAddressError?.city}
+            </p>
           </div>
           <div className="w-full">
             <label>Street Address*</label>
@@ -61,6 +76,9 @@ const DeliveryAddress = ({changeHandler }) => {
               name="streetAddress"
               onChange={changeHandler}
             />
+            <p className="text-red-600 font-medium mt-1">
+              {deliverAddressError?.streetAddress}
+            </p>
           </div>
         </div>
         <div className="w-full">

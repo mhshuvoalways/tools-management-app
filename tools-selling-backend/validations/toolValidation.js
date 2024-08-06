@@ -8,13 +8,13 @@ const productValidation = (value) => {
   }
   if (!value.name) {
     error.name = "Please provide tool name";
-  } else if (value.name.length >= 100) {
-    error.name = "Keep the name within 100 charecters";
+  } else if (value.name.length >= 200) {
+    error.name = "Keep the name within 200 charecters";
   }
   if (!value.description) {
     error.description = "Please provide tool description";
-  } else if (value.description.length >= 500) {
-    error.description = "Keep the description within 500 charecters";
+  } else if (value.description.length >= 2000) {
+    error.description = "Keep the description within 2000 charecters";
   }
   if (!value.price) {
     error.price = "Please provide tool price";

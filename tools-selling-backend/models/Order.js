@@ -3,6 +3,10 @@ const { Schema, model } = mongoose;
 
 const orderSchema = new Schema(
   {
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: "user",
+    },
     orderAddress: {
       type: mongoose.Types.ObjectId,
       ref: "orderAddress",

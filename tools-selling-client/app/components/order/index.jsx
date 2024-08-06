@@ -1,7 +1,7 @@
 "use client";
 
 import { MyContext } from "@/app/context";
-import axios from "axios";
+import Axios from "@/app/services/axios";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import DeliveryAddress from "./DeliveryAddress";
@@ -18,6 +18,15 @@ const Index = () => {
     additionalInformation: "",
   });
 
+  const [deliverAddressError, setDeliveryAddressError] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    country: "",
+    city: "",
+    streetAddress: "",
+  });
+
   const { orderTools, setBtnAction, setTostify, setOrderTools } =
     useContext(MyContext);
   const router = useRouter();
@@ -32,6 +41,10 @@ const Index = () => {
       ...deliverAddress,
       [event.target.name]: event.target.value,
     });
+    setDeliveryAddressError({
+      ...deliverAddressError,
+      [event.target.name]: "",
+    });
   };
 
   const onSubmit = (event) => {
@@ -41,8 +54,7 @@ const Index = () => {
       ...deliverAddress,
       tools: orderTools,
     };
-    axios
-      .post(`${process.env.BACKEND_URL}/order/orderPlace`, orderObj)
+    Axios.post(`${process.env.BACKEND_URL}/order/orderPlace`, orderObj)
       .then((res) => {
         setTostify({ messages: res.data, type: "success" });
         setBtnAction(false);
@@ -51,16 +63,23 @@ const Index = () => {
         router.push("/");
       })
       .catch((err) => {
-        if (err.response) {
-          setTostify({ messages: err.response?.data, type: "error" });
-          setBtnAction(false);
+        setDeliveryAddressError(err.response?.data);
+        setBtnAction(false);
+        if (err.response?.data?.message) {
+          setTostify({
+            messages: { message: err.response?.data.message },
+            type: "error",
+          });
         }
       });
   };
 
   return (
     <div className="mainWidht mt-10 flex justify-between gap-10 flex-wrap md:flex-nowrap">
-      <DeliveryAddress changeHandler={changeHandler} />
+      <DeliveryAddress
+        changeHandler={changeHandler}
+        deliverAddressError={deliverAddressError}
+      />
       <Tools
         totalPrice={totalPrice}
         orderTools={orderTools}

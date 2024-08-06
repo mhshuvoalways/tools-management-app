@@ -32,6 +32,7 @@ const orderPlace = async (req, res) => {
         toolsId.push(tool._id.toString());
       });
       const order = {
+        user: req.user._id,
         orderAddress: orderAddRes._id,
         tools: toolsId,
       };
@@ -40,7 +41,8 @@ const orderPlace = async (req, res) => {
         .then((response) => {
           res.status(200).json({
             response,
-            message: "We have received your order! We will contact soon. Thank you!",
+            message:
+              "We have received your order! We will contact soon. Thank you!",
           });
         })
         .catch(() => {
@@ -113,7 +115,9 @@ const deleteOrder = (req, res) => {
 };
 
 const getMyOrders = (req, res) => {
-  Order.find({ author: req.user._id })
+  Order.find({ user: req.user._id })
+    .populate("orderAddress")
+    .populate("tools")
     .then((response) => {
       res.status(200).json(response);
     })

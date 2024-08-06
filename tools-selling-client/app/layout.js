@@ -1,8 +1,6 @@
-import Loading from "@/app/components/common/loading";
-import Tostify from "@/app/components/common/tostify";
 import { Inter } from "next/font/google";
-import Context from "./context";
 import "./globals.css";
+import Provider from "./Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,13 +35,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${inter.className} bg-gray-50`}>
-        {
-          <Context>
-            <Tostify />
-            <Loading />
-            {children}
-          </Context>
-        }
+        <Provider>{children}</Provider>
       </body>
     </html>
   );

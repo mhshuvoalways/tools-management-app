@@ -42,12 +42,8 @@ const adminLogin = (req, res) => {
 };
 
 const userRegister = (req, res) => {
-  const { email, password, recaptch } = req.body;
-  const validation = registerValidation({
-    email,
-    password,
-    recaptch,
-  });
+  const { name, email, password } = req.body;
+  const validation = registerValidation(req.body);
   if (validation.isValid) {
     User.findOne({ email })
       .then((response) => {
@@ -57,6 +53,7 @@ const userRegister = (req, res) => {
               serverError(res);
             } else {
               const curstomer = {
+                name,
                 email,
                 password: hash,
               };

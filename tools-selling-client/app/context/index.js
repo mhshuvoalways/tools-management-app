@@ -1,16 +1,49 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 export const MyContext = createContext(null);
 
 const Context = ({ children }) => {
-  const [orderTools, setOrderTools] = useState([]);
+  const [isAuth, setIsAuth] = useState(true);
   const [btnAction, setBtnAction] = useState(false);
   const [tostify, setTostify] = useState({
     messages: {},
     type: "",
   });
+  const [orderTools, setOrderTools] = useState([]);
+
+  const router = useRouter();
+
+  const logout = useCallback(() => {
+    localStorage.clear();
+    setIsAuth(false);
+    router.push("/login");
+  }, [router]);
+
+  useEffect(() => {
+    const userToken = localStorage.getItem("token");
+    const token = userToken ? JSON.parse(userToken) : null;
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (decodedToken.exp && decodedToken.exp < currentTime) {
+        logout();
+      } else if (decodedToken.exp) {
+        setIsAuth(true);
+        const timeout = (decodedToken.exp - currentTime) * 1000;
+        setTimeout(() => {
+          logout();
+        }, timeout);
+      } else {
+        logout();
+      }
+    } else {
+      logout();
+    }
+  }, [logout]);
 
   const bookHandler = (item) => {
     const temp = [...orderTools];
@@ -36,6 +69,9 @@ const Context = ({ children }) => {
   return (
     <MyContext.Provider
       value={{
+        isAuth,
+        setIsAuth,
+        logout,
         orderTools,
         setOrderTools,
         bookHandler,

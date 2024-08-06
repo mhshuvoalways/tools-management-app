@@ -1,0 +1,83 @@
+"use client";
+
+import { MyContext } from "@/app/context";
+import Axios from "@/app/services/axios";
+import Image from "next/image";
+import { useContext, useEffect, useState } from "react";
+
+const MyOrder = () => {
+  const [orders, setOrders] = useState([]);
+  const { setTostify } = useContext(MyContext);
+
+  useEffect(() => {
+    Axios.get("/order/getMyOrders")
+      .then((res) => {
+        setOrders(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        if (err.response?.data?.message) {
+          setTostify({
+            messages: { message: err.response?.data.message },
+            type: "error",
+          });
+        }
+      });
+  }, [setTostify]);
+
+  return (
+    <div className="mt-20 mainWidht">
+      <p className="text-3xl mb-2">Hello MH Shuvo</p>
+      <p>Here is your orders</p>
+      <div className="table-auto w-full mt-10 overflow-x-auto">
+        <table>
+          <thead>
+            <tr>
+              <th className="text-left border-b py-5 px-10">Image</th>
+              <th className="text-left border-b py-5 px-10">Title</th>
+              <th className="text-left border-b py-5 px-10">Description</th>
+              <th className="text-left border-b py-5 px-10">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td className="text-left border-b py-5 px-10">
+                  {order?.tools.map((tool, index) => (
+                    <Image
+                      src={tool?.image.url}
+                      alt=""
+                      key={index}
+                      width={200}
+                      height={200}
+                      className="rounded-lg min-w-40"
+                    />
+                  ))}
+                </td>
+                <td className="text-left border-b py-5 px-10">
+                  {order?.tools.map((tool, index) => (
+                    <p key={index} className="min-w-40">
+                      {tool.name}
+                    </p>
+                  ))}
+                </td>
+                <td className="text-left border-b py-5 px-10">
+                  {order?.tools.map((tool, index) => (
+                    <p key={index} className="min-w-80">
+                      {tool.description}
+                    </p>
+                  ))}
+                </td>
+                <td className="text-left border-b py-5 px-10">
+                  {order.status}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default MyOrder;

@@ -5,20 +5,15 @@ import Link from "next/link";
 import { useContext } from "react";
 
 const Header = () => {
-  const { orderTools } = useContext(MyContext);
+  const { orderTools, isAuth, logout } = useContext(MyContext);
 
   return (
     <div className="bg-white py-2 sticky top-0 z-20 shadow">
       <div className="mainWidht flex justify-between items-center gap-5">
+        <p className="text-primary text-3xl font-bold">
+          <Link href={"/"}>SINC</Link>
+        </p>
         <div className="flex items-center gap-5 sm:gap-10">
-          <p className="text-primary text-3xl font-bold">
-            <Link href={"/"}>SINC</Link>
-          </p>
-          <Link href={"/tools"} className="text-primary">
-            Tools
-          </Link>
-        </div>
-        <div>
           <Link href={"/order"}>
             <div className="relative">
               <i className="fa-solid fa-cart-shopping text-2xl text-primary"></i>
@@ -27,6 +22,15 @@ const Header = () => {
               </p>
             </div>
           </Link>
+          <Link href={"/tools"} className="text-primary">
+            Tools
+          </Link>
+          <Link href={"/my-orders"} className="text-primary">
+            My Orders
+          </Link>
+          <p className="cursor-pointer text-primary" onClick={logout}>
+            {isAuth ? "Logout" : "Login"}
+          </p>
         </div>
       </div>
     </div>
