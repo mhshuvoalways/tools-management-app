@@ -8,7 +8,8 @@ import { redirect } from "next/navigation";
 import { useContext, useState } from "react";
 
 const SignUpPage = () => {
-  const { isAuth, setIsAuth, isAuthHandler } = useContext(MyContext);
+  const { isAuth, setIsAuth, isAuthHandler, setBtnAction } =
+    useContext(MyContext);
 
   const [user, setUser] = useState({
     name: "",
@@ -37,16 +38,19 @@ const SignUpPage = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    setBtnAction(true);
     Axios.post("/user/userRegister", user)
       .then((res) => {
         const token = res.data.token;
         localStorage.setItem("token", JSON.stringify(token));
         setAuthToken(token);
         setIsAuth(true);
-        isAuthHandler()
+        isAuthHandler();
+        setBtnAction(false);
       })
       .catch((err) => {
         setErrors(err.response?.data);
+        setBtnAction(false);
       });
   };
 

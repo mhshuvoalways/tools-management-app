@@ -34,19 +34,19 @@ const MyOrder = () => {
       <p className="text-3xl mb-2">Hello {user?.name}</p>
       <p>Here is your orders</p>
       <div className="table-auto w-full mt-10 overflow-x-auto">
-        <table>
+        <table className="border">
           <thead>
             <tr>
-              <th className="text-left border-b py-5 px-10">Image</th>
-              <th className="text-left border-b py-5 px-10">Title</th>
-              <th className="text-left border-b py-5 px-10">Description</th>
-              <th className="text-left border-b py-5 px-10">Status</th>
+              <th className="text-start border-b py-5 px-10">Image</th>
+              <th className="text-start border-b py-5 px-10">Title</th>
+              <th className="text-start border-b py-5 px-10">Description</th>
+              <th className="text-start border-b py-5 px-10">Status</th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order) => (
               <tr key={order._id}>
-                <td className="text-left border-b py-5 px-10">
+                <td className="text-start border-b py-5 px-10 align-top">
                   {order?.tools.map((tool, index) => (
                     <Image
                       src={tool?.image.url}
@@ -54,25 +54,25 @@ const MyOrder = () => {
                       key={index}
                       width={200}
                       height={200}
-                      className="rounded-lg min-w-40"
+                      className="rounded-lg min-w-40 py-2 min-h-44"
                     />
                   ))}
                 </td>
-                <td className="text-left border-b py-5 px-10">
+                <td className="text-start border-b py-5 px-10 align-top">
                   {order?.tools.map((tool, index) => (
-                    <p key={index} className="min-w-40">
+                    <p key={index} className="min-w-40 py-2 min-h-44">
                       {tool.name}
                     </p>
                   ))}
                 </td>
-                <td className="text-left border-b py-5 px-10">
+                <td className="text-start border-b py-5 px-10 align-top">
                   {order?.tools.map((tool, index) => (
-                    <p key={index} className="min-w-80">
+                    <p key={index} className="min-w-80 py-2 min-h-44">
                       {tool.description}
                     </p>
                   ))}
                 </td>
-                <td className="text-left border-b py-5 px-10">
+                <td className="text-start border-b py-5 px-10 align-top">
                   {order.status}
                 </td>
               </tr>

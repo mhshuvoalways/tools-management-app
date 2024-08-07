@@ -28,9 +28,15 @@ const Header = () => {
           <Link href={"/my-orders"} className="text-primary">
             My Orders
           </Link>
-          <p className="cursor-pointer text-primary" onClick={logout}>
-            {isAuth ? "Logout" : "Login"}
-          </p>
+          {isAuth ? (
+            <p className="cursor-pointer text-primary" onClick={logout}>
+              Logout
+            </p>
+          ) : (
+            <Link href={"/login"} className="cursor-pointer text-primary">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>
