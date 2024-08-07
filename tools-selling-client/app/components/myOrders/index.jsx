@@ -33,8 +33,8 @@ const MyOrder = () => {
     <div className="mt-20 mainWidht">
       <p className="text-3xl mb-2">Hello {user?.name}</p>
       <p>Here is your orders</p>
-      <div className="table-auto w-full mt-10 overflow-x-auto">
-        <table className="border">
+      <div className="table-auto mt-10 overflow-x-auto">
+        <table className="border w-full">
           <thead>
             <tr>
               <th className="text-start border-b py-5 px-10">Image</th>
