@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import DeliveryAddress from "./DeliveryAddress";
 import Tools from "./Tools";
-import { redirect } from "next/navigation";
 
 const Index = () => {
   const [deliverAddress, setDeliveryAddress] = useState({
@@ -50,34 +49,34 @@ const Index = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setBtnAction(true);
-    const orderObj = {
-      ...deliverAddress,
-      tools: orderTools,
-    };
-    Axios.post(`${process.env.BACKEND_URL}/order/orderPlace`, orderObj)
-      .then((res) => {
-        setTostify({ messages: res.data, type: "success" });
-        setBtnAction(false);
-        localStorage.removeItem("tools");
-        setOrderTools([]);
-        router.push("/");
-      })
-      .catch((err) => {
-        setDeliveryAddressError(err.response?.data);
-        setBtnAction(false);
-        if (err.response?.data?.message) {
-          setTostify({
-            messages: { message: err.response?.data.message },
-            type: "error",
-          });
-        }
-      });
+    if (!isAuth) {
+      router.push("/login");
+    } else {
+      setBtnAction(true);
+      const orderObj = {
+        ...deliverAddress,
+        tools: orderTools,
+      };
+      Axios.post(`${process.env.BACKEND_URL}/order/orderPlace`, orderObj)
+        .then((res) => {
+          setTostify({ messages: res.data, type: "success" });
+          setBtnAction(false);
+          localStorage.removeItem("tools");
+          setOrderTools([]);
+          router.push("/");
+        })
+        .catch((err) => {
+          setDeliveryAddressError(err.response?.data);
+          setBtnAction(false);
+          if (err.response?.data?.message) {
+            setTostify({
+              messages: { message: err.response?.data.message },
+              type: "error",
+            });
+          }
+        });
+    }
   };
-
-  if (!isAuth) {
-    redirect("/login");
-  }
 
   return (
     <div className="mainWidht mt-10 flex justify-between gap-10 flex-wrap md:flex-nowrap">
