@@ -54,9 +54,10 @@ const orderPlace = async (req, res) => {
   }
 };
 
-const getOders = (req, res) => {
+const getOrders = (req, res) => {
   if (process.env.ADMIN_USER === req.user.email) {
     Order.find()
+      .populate("user")
       .populate({
         path: "tools",
         populate: {
@@ -128,7 +129,7 @@ const getMyOrders = (req, res) => {
 
 module.exports = {
   orderPlace,
-  getOders,
+  getOrders,
   updateOrder,
   deleteOrder,
   getMyOrders,

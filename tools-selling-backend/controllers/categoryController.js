@@ -12,34 +12,47 @@ const createCategory = (req, res) => {
       image: req.file,
     });
     if (validation.isValid) {
-      cloudinary.v2.uploader.upload(
-        req.file.path,
-        {
-          public_id: "tools-management/categories/" + req.file.filename,
-        },
-        function (err, result) {
-          if (err) {
-            serverError(res);
-          } else if (result) {
-            const categoryObj = {
-              name: name,
-              url: name.toLowerCase().split(" ").join("-"),
-              image: result,
-            };
-            new Category(categoryObj)
-              .save()
-              .then((response) => {
-                res.status(200).json({
-                  message: "Category added successfully",
-                  response,
-                });
-              })
-              .catch(() => {
-                serverError(res);
-              });
+      Category.findOne({ url: name.toLowerCase().split(" ").join("-") })
+        .then((isRes) => {
+          if (!isRes) {
+            cloudinary.v2.uploader.upload(
+              req.file.path,
+              {
+                public_id: "tools-management/categories/" + req.file.filename,
+              },
+              function (err, result) {
+                if (err) {
+                  serverError(res);
+                } else if (result) {
+                  const categoryObj = {
+                    name: name,
+                    url: name.toLowerCase().split(" ").join("-"),
+                    image: result,
+                  };
+                  new Category(categoryObj)
+                    .save()
+                    .then((response) => {
+                      res.status(200).json({
+                        message: "Category added successfully",
+                        response,
+                      });
+                    })
+                    .catch(() => {
+                      serverError(res);
+                    });
+                }
+              }
+            );
+          } else {
+            res.status(400).json({
+              message: "Category already exist!",
+              response,
+            });
           }
-        }
-      );
+        })
+        .catch(() => {
+          serverError(res);
+        });
     } else {
       res.status(400).json(validation.error);
     }
@@ -66,10 +79,8 @@ const getSingleCategory = (req, res) => {
     });
 };
 
-const commonUpdateCateogryFunc = (res, id, categoryObj) => {
-  Category.findOneAndUpdate({ _id: id }, categoryObj, {
-    new: true,
-  })
+const commonUpdateCategoryFunc = (res, id, categoryObj) => {
+  Category.findOneAndUpdate({ _id: id }, categoryObj, { new: true })
     .then((response) => {
       res.status(200).json({
         message: "Category updated successfully",
@@ -90,38 +101,52 @@ const updateCategory = (req, res) => {
       image: req.file || req.body.imageUrl,
     });
     if (validation.isValid) {
-      if (req.file) {
-        cloudinary.v2.uploader.upload(
-          req.file.path,
-          {
-            public_id: "tools-management/categories/" + req.file.filename,
-          },
-          function (err, result) {
-            if (err) {
-              serverError(res);
-            } else if (result) {
+      const newUrl = name.toLowerCase().split(" ").join("-");
+      Category.findOne({ url: newUrl })
+        .then((existingCategory) => {
+          if (existingCategory && existingCategory._id.toString() !== id) {
+            res.status(400).json({
+              message: "Category already exists!",
+            });
+          } else {
+            if (req.file) {
+              cloudinary.v2.uploader.upload(
+                req.file.path,
+                {
+                  public_id: "tools-management/categories/" + req.file.filename,
+                },
+                function (err, result) {
+                  if (err) {
+                    serverError(res);
+                  } else if (result) {
+                    const categoryObj = {
+                      name,
+                      url: newUrl,
+                      image: result,
+                    };
+                    commonUpdateCategoryFunc(res, id, categoryObj);
+                  }
+                }
+              );
+              cloudinary.v2.uploader.destroy(categoryImageId);
+            } else {
               const categoryObj = {
                 name,
-                url: name.toLowerCase().split(" ").join("-"),
-                image: result,
+                url: newUrl,
               };
-              commonUpdateCateogryFunc(res, id, categoryObj);
+              commonUpdateCategoryFunc(res, id, categoryObj);
             }
           }
-        );
-        cloudinary.v2.uploader.destroy(categoryImageId);
-      } else {
-        const categoryObj = {
-          name,
-          url: name.toLowerCase().split(" ").join("-"),
-        };
-        commonUpdateCateogryFunc(res, id, categoryObj);
-      }
+        })
+        .catch(() => {
+          serverError(res);
+        });
     } else {
       res.status(400).json(validation.error);
     }
   }
 };
+
 
 const deleteCategory = (req, res) => {
   const { id, categoryImageId } = req.params;

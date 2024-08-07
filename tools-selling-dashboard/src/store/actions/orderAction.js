@@ -6,7 +6,7 @@ import modalAction from "./modalAction";
 
 export const getOrders = () => (dispatch) => {
   axios
-    .get("/order/getOders")
+    .get("/order/getOrders")
     .then((response) => {
       dispatch({
         type: Types.GET_ORDERS,

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import alertAction from "../../store/actions/alertAction";
 import {
   addCategory,
   updateCategory,
@@ -15,7 +14,6 @@ const AddCategory = () => {
 
   const dispatch = useDispatch();
   const { modal: isModalOpen, element } = useSelector((store) => store.modal);
-  const { categories } = useSelector((store) => store.category);
 
   const changeHandlerImage = (event) => {
     setCategory({
@@ -33,29 +31,22 @@ const AddCategory = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const findCategory = categories.find(
-      (el) => el.url === category.name.toLowerCase().split(" ").join("-")
-    );
-    if (!findCategory) {
-      const formData = new FormData();
-      if (category.image) {
-        formData.append("image", category.image);
-      }
-      if (category.imageUrl) {
-        formData.append("imageUrl", category.imageUrl);
-      }
-      formData.append("name", category.name);
-      if (isModalOpen && element) {
-        const {
-          _id,
-          image: { public_id },
-        } = element;
-        dispatch(updateCategory(formData, _id, public_id));
-      } else {
-        dispatch(addCategory(formData));
-      }
+    const formData = new FormData();
+    if (category.image) {
+      formData.append("image", category.image);
+    }
+    if (category.imageUrl) {
+      formData.append("imageUrl", category.imageUrl);
+    }
+    formData.append("name", category.name);
+    if (isModalOpen && element) {
+      const {
+        _id,
+        image: { public_id },
+      } = element;
+      dispatch(updateCategory(formData, _id, public_id));
     } else {
-      dispatch(alertAction({ message: "Category already exist!" }, "error"));
+      dispatch(addCategory(formData));
     }
   };
 

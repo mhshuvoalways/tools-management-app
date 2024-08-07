@@ -37,11 +37,19 @@ const Index = () => {
                 key={el._id}
               >
                 <td className="p-3">
-                  <p className="text-lg">{el.orderAddress.name}</p>
-                  <p className="text-sm">{el.orderAddress.email}</p>
-                  <p className="text-sm">{el.orderAddress.phone}</p>
+                  <p className="text-lg">{el.user.name}</p>
+                  <p className="text-sm">{el.user.email}</p>
                 </td>
                 <td className="p-3">
+                  <p className="text-sm">
+                    <strong>Name:</strong> {el.orderAddress.name}
+                  </p>
+                  <p className="text-sm">
+                    <strong>Email:</strong> {el.orderAddress.email}
+                  </p>
+                  <p className="text-sm">
+                    <strong>Phone:</strong> {el.orderAddress.phone}
+                  </p>
                   <p className="text-sm">
                     <strong>Country:</strong> {el.orderAddress.country}
                   </p>
@@ -66,7 +74,10 @@ const Index = () => {
                         "border-b border-gray-100"
                       }`}
                     >
-                      <img src={tool.image.url} className="w-20 h-14 rounded-xl object-cover" />
+                      <img
+                        src={tool.image.url}
+                        className="w-20 h-14 rounded-xl object-cover"
+                      />
                       <div className="mt-1">
                         <p>
                           <strong>Tool:</strong> {tool.name}

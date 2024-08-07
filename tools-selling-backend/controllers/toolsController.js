@@ -14,40 +14,54 @@ const addTool = (req, res) => {
       image: req.file,
     });
     if (validation.isValid) {
-      cloudinary.v2.uploader.upload(
-        req.file.path,
-        {
-          public_id: "tools-management/tools/" + req.file.filename,
-        },
-        function (err, result) {
-          if (err) {
-            serverError(res);
-          } else if (result) {
-            const toolObj = {
-              category: categoryId,
-              name,
-              slug: name.toLowerCase().split(" ").join("-"),
-              description,
-              price,
-              image: result,
-            };
-            new Tool(toolObj)
-              .save()
-              .then((savedTool) => {
-                return Tool.findOne(savedTool._id).populate("category").exec();
-              })
-              .then((populatedTool) => {
-                res.status(200).json({
-                  message: "Tool added successfully",
-                  response: populatedTool,
-                });
-              })
-              .catch(() => {
-                serverError(res);
-              });
+      Tool.findOne({ slug: name.toLowerCase().split(" ").join("-") })
+        .then((isResponse) => {
+          if (!isResponse) {
+            cloudinary.v2.uploader.upload(
+              req.file.path,
+              {
+                public_id: "tools-management/tools/" + req.file.filename,
+              },
+              function (err, result) {
+                if (err) {
+                  serverError(res);
+                } else if (result) {
+                  const toolObj = {
+                    category: categoryId,
+                    name,
+                    slug: name.toLowerCase().split(" ").join("-"),
+                    description,
+                    price,
+                    image: result,
+                  };
+                  new Tool(toolObj)
+                    .save()
+                    .then((savedTool) => {
+                      return Tool.findOne(savedTool._id)
+                        .populate("category")
+                        .exec();
+                    })
+                    .then((populatedTool) => {
+                      res.status(200).json({
+                        message: "Tool added successfully",
+                        response: populatedTool,
+                      });
+                    })
+                    .catch(() => {
+                      serverError(res);
+                    });
+                }
+              }
+            );
+          } else {
+            res.status(400).json({
+              message: "Tool already exist!",
+            });
           }
-        }
-      );
+        })
+        .catch(() => {
+          serverError(res);
+        });
     } else {
       res.status(400).json(validation.error);
     }
@@ -114,39 +128,52 @@ const updateTool = (req, res) => {
       image: req.file || req.body.imageUrl,
     });
     if (validation.isValid) {
-      if (req.file) {
-        cloudinary.v2.uploader.upload(
-          req.file.path,
-          {
-            public_id: "tools-management/tools/" + req.file.filename,
-          },
-          function (err, result) {
-            if (err) {
-              serverError(res);
-            } else if (result) {
+      const newSlug = name.toLowerCase().split(" ").join("-");
+      Tool.findOne({ slug: newSlug })
+        .then((isResponse) => {
+          if (isResponse && isResponse._id.toString() !== id) {
+            res.status(400).json({
+              message: "Tool already exist!",
+            });
+          } else {
+            if (req.file) {
+              cloudinary.v2.uploader.upload(
+                req.file.path,
+                {
+                  public_id: "tools-management/tools/" + req.file.filename,
+                },
+                function (err, result) {
+                  if (err) {
+                    serverError(res);
+                  } else if (result) {
+                    const toolObj = {
+                      category: categoryId,
+                      name,
+                      slug: newSlug,
+                      description,
+                      price,
+                      image: result,
+                    };
+                    commonUpdateToolFunc(res, id, toolObj);
+                  }
+                }
+              );
+              cloudinary.v2.uploader.destroy(toolImageId);
+            } else {
               const toolObj = {
                 category: categoryId,
                 name,
                 slug: name.toLowerCase().split(" ").join("-"),
                 description,
                 price,
-                image: result,
               };
               commonUpdateToolFunc(res, id, toolObj);
             }
           }
-        );
-        cloudinary.v2.uploader.destroy(toolImageId);
-      } else {
-        const toolObj = {
-          category: categoryId,
-          name,
-          slug: name.toLowerCase().split(" ").join("-"),
-          description,
-          price,
-        };
-        commonUpdateToolFunc(res, id, toolObj);
-      }
+        })
+        .catch(() => {
+          serverError(res);
+        });
     } else {
       res.status(400).json(validation.error);
     }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import alertAction from "../../store/actions/alertAction";
 import { addTool, updateTool } from "../../store/actions/toolAction";
 
 const AddTool = () => {
@@ -19,7 +18,6 @@ const AddTool = () => {
   const dispatch = useDispatch();
   const { modal: isModalOpen, element } = useSelector((store) => store.modal);
   const { categories } = useSelector((store) => store.category);
-  const { tools } = useSelector((store) => store.tool);
 
   const changeHandlerImage = (event) => {
     setTool({
@@ -47,32 +45,25 @@ const AddTool = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const findtool = tools.find(
-      (el) => el.url === tool.name.toLowerCase().split(" ").join("-")
-    );
-    if (!findtool) {
-      const formData = new FormData();
-      if (tool.image) {
-        formData.append("image", tool.image);
-      }
-      if (tool.imageUrl) {
-        formData.append("imageUrl", tool.imageUrl);
-      }
-      formData.append("name", tool.name);
-      formData.append("categoryId", tool.category._id);
-      formData.append("description", tool.description);
-      formData.append("price", tool.price);
-      if (isModalOpen && element) {
-        const {
-          _id,
-          image: { public_id },
-        } = element;
-        dispatch(updateTool(formData, _id, public_id));
-      } else {
-        dispatch(addTool(formData));
-      }
+    const formData = new FormData();
+    if (tool.image) {
+      formData.append("image", tool.image);
+    }
+    if (tool.imageUrl) {
+      formData.append("imageUrl", tool.imageUrl);
+    }
+    formData.append("name", tool.name);
+    formData.append("categoryId", tool.category._id);
+    formData.append("description", tool.description);
+    formData.append("price", tool.price);
+    if (isModalOpen && element) {
+      const {
+        _id,
+        image: { public_id },
+      } = element;
+      dispatch(updateTool(formData, _id, public_id));
     } else {
-      dispatch(alertAction({ message: "Tool already exist!" }, "error"));
+      dispatch(addTool(formData));
     }
   };
 
