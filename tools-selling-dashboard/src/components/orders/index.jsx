@@ -36,11 +36,11 @@ const Index = () => {
                 }`}
                 key={el._id}
               >
-                <td className="p-3">
+                <td className="p-3 align-top">
                   <p className="text-lg">{el.user.name}</p>
                   <p className="text-sm">{el.user.email}</p>
                 </td>
-                <td className="p-3">
+                <td className="p-3 align-top">
                   <p className="text-sm">
                     <strong>Name:</strong> {el.orderAddress.name}
                   </p>
@@ -62,10 +62,10 @@ const Index = () => {
                     {el.orderAddress.streetAddress}
                   </p>
                 </td>
-                <td className="p-3 w-80 sm:w-2/12">
+                <td className="p-3 w-80 sm:w-2/12 align-top">
                   <p>{el.orderAddress.additionalInformation || "N/A"}</p>
                 </td>
-                <td className="px-3 w-80 sm:w-3/12">
+                <td className="px-3 w-80 sm:w-3/12 align-top">
                   {el.tools.map((tool, index) => (
                     <div
                       key={tool._id}
@@ -94,11 +94,13 @@ const Index = () => {
                     </div>
                   ))}
                 </td>
-                <td className={`p-3 text-lg`}>
+                <td className={`p-3 text-lg align-top`}>
                   <p>{moment(el.createdAt).format("LL")}</p>
                 </td>
-                <td className={`p-3 text-lg text-primary`}>{el.status}</td>
-                <td className="p-3 flex-inline">
+                <td className={`p-3 text-lg text-primary align-top`}>
+                  {el.status}
+                </td>
+                <td className="p-3 flex-inline align-top">
                   <i
                     className="fa-solid fa-pen-to-square cursor-pointer text-lg"
                     onClick={() => {

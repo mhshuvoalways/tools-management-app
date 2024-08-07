@@ -2,9 +2,9 @@ const Hero = () => {
   return (
     <div
       style={{
-        backgroundImage: "url(/images/diytoolsbg.jpg)",
+        backgroundImage: "url(/images/toolsbg.png)",
       }}
-      className="h-[50vh] bg-no-repeat bg-cover flex justify-center items-center"
+      className="h-[50vh] bg-no-repeat bg-center bg-cover flex justify-center items-center"
     >
       <div className="bg-white rounded-xl px-5 sm:px-20 py-5 sm:py-10 flex justify-center items-center text-center mainWidht sm:w-6/12 shadow">
         <div className="space-y-5">
