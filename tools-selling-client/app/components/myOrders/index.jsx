@@ -47,30 +47,42 @@ const MyOrder = () => {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td className="text-start border-b py-5 px-10 align-top">
-                  {order?.tools.map((tool, index) => (
-                    <Image
-                      src={tool?.image.url}
-                      alt=""
-                      key={index}
-                      width={200}
-                      height={200}
-                      className="rounded-lg min-w-40 py-2 min-h-44"
-                    />
-                  ))}
+                  {order?.tools.length ? (
+                    order?.tools.map((tool, index) => (
+                      <Image
+                        src={tool?.image.url}
+                        alt=""
+                        key={index}
+                        width={200}
+                        height={200}
+                        className="rounded-lg min-w-40 py-2 min-h-44"
+                      />
+                    ))
+                  ) : (
+                    <p>N/A</p>
+                  )}
                 </td>
                 <td className="text-start border-b py-5 px-10 align-top">
-                  {order?.tools.map((tool, index) => (
-                    <p key={index} className="min-w-40 py-2 min-h-44">
-                      {tool.name}
-                    </p>
-                  ))}
+                  {order?.tools.length ? (
+                    order?.tools.map((tool, index) => (
+                      <p key={index} className="min-w-40 py-2 min-h-44">
+                        {tool.name}
+                      </p>
+                    ))
+                  ) : (
+                    <p>N/A</p>
+                  )}
                 </td>
                 <td className="text-start border-b py-5 px-10 align-top">
-                  {order?.tools.map((tool, index) => (
-                    <p key={index} className="min-w-80 py-2 min-h-44">
-                      {tool.description}
-                    </p>
-                  ))}
+                  {order?.tools.length ? (
+                    order?.tools.map((tool, index) => (
+                      <p key={index} className="min-w-80 py-2 min-h-44">
+                        {tool.description}
+                      </p>
+                    ))
+                  ) : (
+                    <p>N/A</p>
+                  )}
                 </td>
                 <td className="text-start border-b py-5 px-10 align-top">
                   {order.status}

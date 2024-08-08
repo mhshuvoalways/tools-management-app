@@ -9,22 +9,15 @@ import Tools from "./Tools";
 
 const Index = () => {
   const [deliverAddress, setDeliveryAddress] = useState({
-    name: "",
     email: "",
-    phone: "",
-    country: "",
-    city: "",
-    streetAddress: "",
-    additionalInformation: "",
+    rc: "",
+    purpose: "",
   });
 
   const [deliverAddressError, setDeliveryAddressError] = useState({
-    name: "",
     email: "",
-    phone: "",
-    country: "",
-    city: "",
-    streetAddress: "",
+    rc: "",
+    purpose: "",
   });
 
   const { isAuth, orderTools, setBtnAction, setTostify, setOrderTools } =

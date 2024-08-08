@@ -21,7 +21,6 @@ const Index = () => {
             <tr className="bg-gray-100 text-left">
               <th className="p-3">User</th>
               <th className="p-3">Delivery Address</th>
-              <th className="p-3">Additional Information</th>
               <th className="p-3">Tools</th>
               <th className="p-3">Order Date</th>
               <th className="p-3">Status</th>
@@ -42,28 +41,14 @@ const Index = () => {
                 </td>
                 <td className="p-3 align-top">
                   <p className="text-sm">
-                    <strong>Name:</strong> {el.orderAddress.name}
-                  </p>
-                  <p className="text-sm">
                     <strong>Email:</strong> {el.orderAddress.email}
                   </p>
                   <p className="text-sm">
-                    <strong>Phone:</strong> {el.orderAddress.phone}
+                    <strong>RC:</strong> {el.orderAddress.rc}
                   </p>
                   <p className="text-sm">
-                    <strong>Country:</strong> {el.orderAddress.country}
+                    <strong>Purpose:</strong> {el.orderAddress.purpose}
                   </p>
-                  <p className="text-sm">
-                    <strong>City: </strong>
-                    {el.orderAddress.city}
-                  </p>
-                  <p className="text-sm">
-                    <strong>Street Address: </strong>
-                    {el.orderAddress.streetAddress}
-                  </p>
-                </td>
-                <td className="p-3 w-80 sm:w-2/12 align-top">
-                  <p>{el.orderAddress.additionalInformation || "N/A"}</p>
                 </td>
                 <td className="px-3 w-80 sm:w-3/12 align-top">
                   {el.tools.map((tool, index) => (

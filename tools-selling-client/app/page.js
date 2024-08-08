@@ -6,13 +6,13 @@ import Hero from "@/app/components/hero";
 
 const Home = () => {
   return (
-    <>
+    <div className="relative">
       <Header />
       <Hero />
       <Search className="mt-20 sm:w-6/12 mainWidht" />
       <Categories />
       <Footer />
-    </>
+    </div>
   );
 };
 

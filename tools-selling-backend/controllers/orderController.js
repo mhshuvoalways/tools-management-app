@@ -3,25 +3,12 @@ const OrderAddressController = require("./orderAddressController");
 const serverError = require("../utils/serverError");
 const orderValidation = require("../validations/orderValidation");
 
-const orderPlace = async (req, res) => {
-  const {
-    name,
-    email,
-    phone,
-    city,
-    country,
-    streetAddress,
-    additionalInformation,
-    tools,
-  } = req.body;
+const orderPlace = (req, res) => {
+  const { email, rc, purpose, tools } = req.body;
   const address = {
-    name,
     email,
-    phone,
-    city,
-    country,
-    streetAddress,
-    additionalInformation,
+    rc,
+    purpose,
     tools,
   };
   const validation = orderValidation(address);
