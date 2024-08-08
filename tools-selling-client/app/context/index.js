@@ -19,6 +19,7 @@ const Context = ({ children }) => {
   const logout = useCallback(() => {
     localStorage.clear();
     setIsAuth(false);
+    setOrderTools([])
   }, []);
 
   const isAuthHandler = useCallback(() => {
